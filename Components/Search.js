@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput, Button, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
-import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi';
 import FilmItem from './FilmItem';
+import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi';
 
 class Search extends React.Component {
 
@@ -12,7 +12,7 @@ class Search extends React.Component {
         this.searchedText= ""
         this.state = { 
             films: [],
-            iLoading: false
+            isLoading: false
         } 
     }
 
@@ -53,6 +53,12 @@ class Search extends React.Component {
         })
     }
 
+
+_displayDetailForFilm = (idFilm) => {
+    console.log("Display film with id " + idFilm)
+    this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
+}
+
     render() {
         return (
             <View style={styles.main_container}>                                              
@@ -72,7 +78,7 @@ class Search extends React.Component {
                         this._loadFilms()
                     }
                 }}
-                renderItem={({item}) => <FilmItem film={item}/>}
+                renderItem={({item}) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />}
                 />
                 {this._displayLoading()}
             </View>
@@ -82,7 +88,6 @@ class Search extends React.Component {
 
 const styles = StyleSheet.create({
     main_container: {
-        marginTop: 20,
         flex: 1
     },
     textinput: {
