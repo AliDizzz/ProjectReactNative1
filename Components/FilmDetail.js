@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { getFilmDetailFromApi, getImageFromApi } from '../API/TMDBApi'
 import moment from 'moment'
 import numeral from 'numeral'
+import { connect } from 'react-redux'
 
 class FilmDetail extends React.Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class FilmDetail extends React.Component {
       isLoading: true // A l'ouverture de la vue, on affiche le chargement, le temps de récupérer le détail du film
     }
     }
+    
 
     componentDidMount() {
         getFilmDetailFromApi(this.props.route.params.idFilm).then(data => {
@@ -39,30 +41,30 @@ class FilmDetail extends React.Component {
     _displayFilm() {
         const { film } = this.state
         if (film != undefined) {
-          return (
+            return (
             <ScrollView style={styles.scrollview_container}>
-              <Image
+                <Image
                 style={styles.image}
                 source={{uri: getImageFromApi(film.backdrop_path)}}
-              />
-              <Text style={styles.title_text}>{film.title}</Text>
-              <Text style={styles.description_text}>{film.overview}</Text>
-              <Text style={styles.default_text}>Sorti le {moment(new Date(film.release_date)).format('DD/MM/YYYY')}</Text>
-              <Text style={styles.default_text}>Note : {film.vote_average} / 10</Text>
-              <Text style={styles.default_text}>Nombre de votes : {film.vote_count}</Text>
-              <Text style={styles.default_text}>Budget : {numeral(film.budget).format('0,0[.]00 $')}</Text>
-              <Text style={styles.default_text}>Genre(s) : {film.genres.map(function(genre){
-                  return genre.name;
+                />
+                <Text style={styles.title_text}>{film.title}</Text>
+                <Text style={styles.description_text}>{film.overview}</Text>
+                <Text style={styles.default_text}>Sorti le {moment(new Date(film.release_date)).format('DD/MM/YYYY')}</Text>
+                <Text style={styles.default_text}>Note : {film.vote_average} / 10</Text>
+                <Text style={styles.default_text}>Nombre de votes : {film.vote_count}</Text>
+                <Text style={styles.default_text}>Budget : {numeral(film.budget).format('0,0[.]00 $')}</Text>
+                <Text style={styles.default_text}>Genre(s) : {film.genres.map(function(genre){
+                    return genre.name;
                 }).join(" / ")}
-              </Text>
-              <Text style={styles.default_text}>Companie(s) : {film.production_companies.map(function(company){
-                  return company.name;
+                </Text>
+                <Text style={styles.default_text}>Companie(s) : {film.production_companies.map(function(company){
+                    return company.name;
                 }).join(" / ")}
-              </Text>
+                </Text>
             </ScrollView>
-          )
+            )
         }
-      }
+    }
 
 
     render() {
@@ -71,7 +73,7 @@ class FilmDetail extends React.Component {
             {this._displayFilm()}
             {this._displayLoading()}
         </View>
-    )
+        )
     }
 }
 
@@ -120,4 +122,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FilmDetail
+const mapStateToProps = (state) => {
+    return {
+        favoritesFilm: state.favoritesFilm
+    }
+}
+
+export default connect(mapStateToProps)(FilmDetail)
