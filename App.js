@@ -9,9 +9,8 @@ import Store from './Store/configureStore'
 export default class App extends React.Component {
   render() {
     return (
-
       <Provider store={Store}>
-      <Navigation/>
+        <Navigation/>
       </Provider>
     )
   }
