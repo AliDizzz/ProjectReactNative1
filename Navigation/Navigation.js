@@ -44,7 +44,7 @@ export default () => (
                         name="Favorites" 
                         component={Favorites}
                         options={{tabBarIcon: () => {
-                            return <Image source={require('../Images/ic_favorite_border.png')} style={styles.icon}/>
+                            return <Image source={require('../Images/ic_favorite.png')} style={styles.icon}/>
                         }}} 
                         tabBarOptions={{
                             activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30
     }
-  })
+})
 
 
 
