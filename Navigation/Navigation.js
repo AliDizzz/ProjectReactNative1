@@ -22,6 +22,13 @@ const SearchStackNavigator = () => (
         </Stack.Navigator>
 )
 
+const FavoritesStackNavigator = () => (
+    <Stack.Navigator>
+    <Stack.Screen name="Favorites" component={Favorites} options={{title: 'favoris'}} />
+    <Stack.Screen name="FilmDetail" component={FilmDetail}/>
+</Stack.Navigator>
+)
+
 
 export default () => (
             <NavigationContainer>
@@ -42,7 +49,7 @@ export default () => (
                     />
                     <Tab.Screen 
                         name="Favorites" 
-                        component={Favorites}
+                        component={FavoritesStackNavigator}
                         options={{tabBarIcon: () => {
                             return <Image source={require('../Images/ic_favorite.png')} style={styles.icon}/>
                         }}} 
