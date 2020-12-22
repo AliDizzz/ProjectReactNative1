@@ -15,6 +15,7 @@ import { getFilmDetailFromApi, getImageFromApi } from "../API/TMDBApi";
 import moment from "moment";
 import numeral from "numeral";
 import { connect } from "react-redux";
+import EnlargeShrink from "../Animations/EnlargeShrink";
 
 class FilmDetail extends React.Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class FilmDetail extends React.Component {
         film: undefined,
         isLoading: false
       }
+      this._toggleFavorite = this._toggleFavorite.bind(this)
     }
   
     componentDidMount() {
@@ -62,15 +64,19 @@ class FilmDetail extends React.Component {
   
     _displayFavoriteImage() {
       var sourceImage = require('../Images/ic_favorite_border.png')
+      var shouldEnlarge = false // Par défaut, si le film n'est pas en favoris, on veut qu'au clic sur le bouton, celui-ci s'agrandisse => shouldEnlarge à true
       if (this.props.favoritesFilm.findIndex(item => item.id === this.state.film.id) !== -1) {
-        // Film dans nos favoris
         sourceImage = require('../Images/ic_favorite.png')
+        shouldEnlarge = true // Si le film est dans les favoris, on veut qu'au clic sur le bouton, celui-ci se rétrécisse => shouldEnlarge à false
       }
       return (
-        <Image
-          style={styles.favorite_image}
-          source={sourceImage}
-        />
+        <EnlargeShrink
+          shouldEnlarge={shouldEnlarge}>
+          <Image
+            style={styles.favorite_image}
+            source={sourceImage}
+          />
+        </EnlargeShrink>
       )
     }
   
@@ -164,8 +170,9 @@ class FilmDetail extends React.Component {
       marginTop: 5,
     },
     favorite_image: {
-      width: 40,
-      height: 40
+      flex: 1,
+      width: null,
+      height: null
     }
   })
   
