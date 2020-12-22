@@ -1,8 +1,10 @@
 // Animations/FadeIn.js
 import 'react-native-gesture-handler';
 import React from "react";
-import { Dimensions } from "react-native";
-import Animated from "react-native-reanimated";
+
+import Animated from 'react-native-reanimated';
+import { Dimensions } from 'react-native';
+
 
 
 class FadeIn extends React.Component {

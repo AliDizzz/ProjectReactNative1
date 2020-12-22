@@ -1,4 +1,5 @@
 // Animations/EnlargeShrink.js
+import 'react-native-gesture-handler';
 
 import React from 'react'
 import { Animated } from 'react-native'
